@@ -261,6 +261,19 @@ create table if not exists checklist_items (
 );
 
 -- ---------------------------------------------------------------------------
+-- script_document: one prose screenplay per project (Tiptap JSON), separate
+-- from the `scenes` breakdown table. Same access tier as `scenes` (see the
+-- matrix below), which is what makes "PDF if you can read, Word if you can
+-- write" line up with existing read/write roles.
+-- ---------------------------------------------------------------------------
+create table if not exists script_document (
+  project_id uuid primary key references projects (id) on delete cascade,
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users (id) on delete set null
+);
+
+-- ---------------------------------------------------------------------------
 -- RLS: role-aware per table, per the read/write matrix documented in
 -- CLAUDE.md. `admin` always includes the project owner (see project_role()).
 -- ---------------------------------------------------------------------------
@@ -271,6 +284,7 @@ declare
   write_roles text[];
   matrix jsonb := '{
     "scenes":              {"read": ["admin","director","crew"],                     "write": ["admin","director"]},
+    "script_document":     {"read": ["admin","director","crew"],                     "write": ["admin","director"]},
     "characters":          {"read": ["admin","director","casting_director","crew"],  "write": ["admin","director"]},
     "locations":           {"read": ["admin","director","crew"],                     "write": ["admin","director"]},
     "actors":              {"read": ["admin","director","casting_director","crew"],  "write": ["admin","casting_director"]},

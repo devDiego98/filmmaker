@@ -4,6 +4,7 @@ import { useProjectMembers, type Project } from "@/features/projects/queries"
 
 export type TableKey =
   | "scenes"
+  | "scriptDocument"
   | "characters"
   | "locations"
   | "actors"
@@ -20,6 +21,7 @@ type Access = "none" | "read" | "write"
 /** Mirrors the `matrix` jsonb in supabase/schema.sql — keep both in sync. */
 const TABLE_ACCESS: Record<TableKey, Record<TeamRole, Access>> = {
   scenes: { admin: "write", director: "write", casting_director: "none", crew: "read" },
+  scriptDocument: { admin: "write", director: "write", casting_director: "none", crew: "read" },
   characters: { admin: "write", director: "write", casting_director: "read", crew: "read" },
   locations: { admin: "write", director: "write", casting_director: "none", crew: "read" },
   actors: { admin: "write", director: "read", casting_director: "write", crew: "read" },

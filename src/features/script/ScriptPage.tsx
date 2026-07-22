@@ -27,6 +27,7 @@ import { usePermissions } from "@/lib/permissions"
 import { useScenes, useCharacters } from "./queries"
 import { SceneDialog } from "./SceneDialog"
 import { CharacterDialog } from "./CharacterDialog"
+import { ScriptDocumentEditor } from "./ScriptDocumentEditor"
 
 const sceneColorClasses: Record<SceneColor, string> = {
   white: "bg-white text-neutral-900 border-neutral-300",
@@ -84,13 +85,18 @@ export function ScriptPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Tabs defaultValue="scenes">
+      <Tabs defaultValue="document">
         <div className="flex items-center justify-between">
           <TabsList>
+            <TabsTrigger value="document">Guion</TabsTrigger>
             <TabsTrigger value="scenes">Escenas</TabsTrigger>
             <TabsTrigger value="characters">Personajes</TabsTrigger>
           </TabsList>
         </div>
+
+        <TabsContent value="document">
+          <ScriptDocumentEditor />
+        </TabsContent>
 
         <TabsContent value="scenes" className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center gap-2">
