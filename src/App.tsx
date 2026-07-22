@@ -6,6 +6,7 @@ import { AuthProvider } from "@/features/auth/AuthProvider"
 import { RequireAuth } from "@/features/auth/RequireAuth"
 import { LoginPage } from "@/features/auth/LoginPage"
 import { SignupPage } from "@/features/auth/SignupPage"
+import { AcceptInvitePage } from "@/features/auth/AcceptInvitePage"
 import { MissingConfigScreen } from "@/features/auth/MissingConfigScreen"
 import { DashboardPage } from "@/features/dashboard/DashboardPage"
 import { ScriptPage } from "@/features/script/ScriptPage"
@@ -35,6 +36,7 @@ function App() {
             <Routes>
               <Route path="login" element={<LoginPage />} />
               <Route path="signup" element={<SignupPage />} />
+              <Route path="invite" element={<AcceptInvitePage />} />
               <Route element={<RequireAuth />}>
                 <Route element={<AppLayout />}>
                   <Route index element={<DashboardPage />} />
